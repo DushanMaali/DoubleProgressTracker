@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark background (gym vibe) -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- New gym-inspired palette -->
+    <color name="background_dark">#121212</color>        <!-- Dark background -->
+    <color name="surface_dark">#1E1E1E</color>           <!-- Slightly lighter surface -->
+    <color name="primary">#00E676</color>                <!-- Neon green (primary) -->
+    <color name="primary_dark">#00C853</color>           <!-- Darker green -->
+    <color name="accent">#FF6D00</color>                 <!-- Orange accent -->
+    <color name="accent_dark">#E65100</color>            <!-- Dark orange -->
+    <color name="text_primary">#FFFFFF</color>           <!-- White text -->
+    <color name="text_secondary">#B0B0B0</color>         <!-- Light gray for secondary text -->
+    <color name="error">#CF6679</color>                  <!-- Error red -->
+</resources>
