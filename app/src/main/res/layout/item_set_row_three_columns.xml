@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="4dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tvSetNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Set 1"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tvTargetReps"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Target: 10"
+        android:textSize="14sp"
+        android:gravity="center"/>
+
+    <!-- For previous sets (TextView) -->
+    <TextView
+        android:id="@+id/tvPreviousReps"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="8"
+        android:textSize="14sp"
+        android:gravity="end"
+        android:visibility="gone"/>
+
+    <!-- For ongoing sets (EditText) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutCurrentReps"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCurrentReps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

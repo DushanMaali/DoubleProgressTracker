@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dark background (gym vibe) -->
+    <!-- Original Material colors (kept for reference) -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -9,14 +9,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- New gym-inspired palette -->
-    <color name="background_dark">#121212</color>        <!-- Dark background -->
-    <color name="surface_dark">#1E1E1E</color>           <!-- Slightly lighter surface -->
-    <color name="primary">#00E676</color>                <!-- Neon green (primary) -->
-    <color name="primary_dark">#00C853</color>           <!-- Darker green -->
-    <color name="accent">#FF6D00</color>                 <!-- Orange accent -->
-    <color name="accent_dark">#E65100</color>            <!-- Dark orange -->
-    <color name="text_primary">#FFFFFF</color>           <!-- White text -->
-    <color name="text_secondary">#B0B0B0</color>         <!-- Light gray for secondary text -->
-    <color name="error">#CF6679</color>                  <!-- Error red -->
+    <!-- New eye‑friendly gym palette -->
+    <color name="background_dark">#1E1E1E</color>   <!-- Dark but not pure black -->
+    <color name="surface_dark">#2A2A2A</color>      <!-- Cards and surfaces -->
+    <color name="primary">#4CAF50</color>           <!-- Softer green -->
+    <color name="primary_dark">#388E3C</color>      <!-- Darker green for variants -->
+    <color name="accent">#FF8A65</color>            <!-- Warm orange -->
+    <color name="accent_dark">#F4511E</color>       <!-- Darker orange -->
+    <color name="text_primary">#FFFFFF</color>      <!-- White text -->
+    <color name="text_secondary">#B0B0B0</color>    <!-- Light gray secondary -->
+    <color name="error">#CF6679</color>             <!-- Error red (unchanged) -->
 </resources>

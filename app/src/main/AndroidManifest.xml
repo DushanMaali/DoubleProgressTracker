@@ -12,17 +12,26 @@
 
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.ScheduleManagementActivity" />
-        <activity android:name=".ui.ScheduleDetailActivity" />
-        <activity android:name=".ui.LogWorkoutSelectionActivity" />
-        <activity android:name=".ui.LogWorkoutActivity" />
+        <activity
+            android:name=".ui.ScheduleManagementActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.ScheduleDetailActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.LogWorkoutSelectionActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.LogWorkoutActivity"
+            android:windowSoftInputMode="adjustResize" />
 
     </application>
 

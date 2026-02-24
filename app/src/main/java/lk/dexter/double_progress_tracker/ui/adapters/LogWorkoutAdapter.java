@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.textfield.TextInputLayout;
 import lk.dexter.double_progress_tracker.R;
 import lk.dexter.double_progress_tracker.data.entity.Exercise;
 import lk.dexter.double_progress_tracker.data.entity.SetLog;
@@ -70,7 +71,7 @@ public class LogWorkoutAdapter extends RecyclerView.Adapter<LogWorkoutAdapter.Vi
                     try {
                         reps.add(Integer.parseInt(text));
                     } catch (NumberFormatException e) {
-                        // ignore invalid entries
+                        // ignore
                     }
                 }
             }
@@ -81,7 +82,6 @@ public class LogWorkoutAdapter extends RecyclerView.Adapter<LogWorkoutAdapter.Vi
         return result;
     }
 
-    // Helper to get target reps for an exercise (for double progression check)
     public Map<Integer, int[]> getTargetRepsMap() {
         Map<Integer, int[]> map = new HashMap<>();
         for (Exercise e : exercises) {
@@ -91,67 +91,69 @@ public class LogWorkoutAdapter extends RecyclerView.Adapter<LogWorkoutAdapter.Vi
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvExerciseName, tvTarget, tvPrevious;
-        EditText etWeight;
+        TextView tvExerciseName, tvPreviousDateWeight;
+        EditText etCurrentWeight;
         Button btnAddSet;
-        LinearLayout setsContainer;
+        LinearLayout previousSetsContainer, ongoingSetsContainer;
         Exercise currentExercise;
         List<EditText> setEditTexts;
 
         ViewHolder(View itemView) {
             super(itemView);
             tvExerciseName = itemView.findViewById(R.id.tvExerciseName);
-            tvTarget = itemView.findViewById(R.id.tvTarget);
-            tvPrevious = itemView.findViewById(R.id.tvPrevious);
-            etWeight = itemView.findViewById(R.id.etWeight);
+            tvPreviousDateWeight = itemView.findViewById(R.id.tvPreviousDateWeight);
+            etCurrentWeight = itemView.findViewById(R.id.etCurrentWeight);
             btnAddSet = itemView.findViewById(R.id.btnAddSet);
-            setsContainer = itemView.findViewById(R.id.setsContainer);
+            previousSetsContainer = itemView.findViewById(R.id.previousSetsContainer);
+            ongoingSetsContainer = itemView.findViewById(R.id.ongoingSetsContainer);
         }
 
         void bind(Exercise exercise) {
             currentExercise = exercise;
-            setEditTexts = new ArrayList<>();
-            setRepsEditTexts.put(exercise.getId(), setEditTexts);
-
             tvExerciseName.setText(exercise.getName());
 
-            // Show target reps per set
             int[] targetReps = exercise.getTargetRepsArray();
-            StringBuilder targetStr = new StringBuilder("Targets: ");
-            for (int t : targetReps) {
-                targetStr.append(t).append(" ");
-            }
-            tvTarget.setText(targetStr.toString().trim());
 
-            // Show previous record
-            List<SetLog> prev = previousRecords.get(exercise.getId());
-            if (prev != null && !prev.isEmpty()) {
-                StringBuilder sb = new StringBuilder("Previous: ");
-                for (SetLog s : prev) {
-                    sb.append(s.getWeight()).append("kg × ").append(s.getReps()).append(" ");
+            // Previous section
+            List<SetLog> prevSets = previousRecords.get(exercise.getId());
+            if (prevSets != null && !prevSets.isEmpty()) {
+                double prevWeight = prevSets.get(0).getWeight();
+                tvPreviousDateWeight.setText("Last: " + prevWeight + " kg");
+                previousSetsContainer.removeAllViews();
+                for (int i = 0; i < prevSets.size(); i++) {
+                    SetLog set = prevSets.get(i);
+                    View row = LayoutInflater.from(itemView.getContext())
+                            .inflate(R.layout.item_set_row_three_columns, previousSetsContainer, false);
+                    TextView tvSetNumber = row.findViewById(R.id.tvSetNumber);
+                    TextView tvTarget = row.findViewById(R.id.tvTargetReps);
+                    TextView tvPrevReps = row.findViewById(R.id.tvPreviousReps);
+                    // Hide current input
+                    row.findViewById(R.id.inputLayoutCurrentReps).setVisibility(View.GONE);
+                    tvPrevReps.setVisibility(View.VISIBLE);
+
+                    tvSetNumber.setText("Set " + (i + 1));
+                    if (i < targetReps.length) {
+                        tvTarget.setText(String.valueOf(targetReps[i]));
+                    } else {
+                        tvTarget.setText("-");
+                    }
+                    tvPrevReps.setText(String.valueOf(set.getReps()));
+                    previousSetsContainer.addView(row);
                 }
-                tvPrevious.setText(sb.toString());
             } else {
-                tvPrevious.setText("No previous log");
+                tvPreviousDateWeight.setText("No previous log");
+                previousSetsContainer.removeAllViews();
             }
 
-            // Pre-fill weight with suggestion or starting weight
-            double weight = exercise.getSuggestedNextWeight() > 0 ?
+            // Current section
+            double suggestedWeight = exercise.getSuggestedNextWeight() > 0 ?
                     exercise.getSuggestedNextWeight() : exercise.getStartingWeight();
-            etWeight.setText(String.valueOf(weight));
-            enteredWeights.put(exercise.getId(), weight);
-
-            // Clear container and add set rows based on targetReps length
-            setsContainer.removeAllViews();
-            for (int i = 0; i < targetReps.length; i++) {
-                addSetRow(i + 1, targetReps[i], null);
-            }
-
-            // Weight change listener
-            etWeight.setOnFocusChangeListener((v, hasFocus) -> {
+            etCurrentWeight.setText(String.valueOf(suggestedWeight));
+            enteredWeights.put(exercise.getId(), suggestedWeight);
+            etCurrentWeight.setOnFocusChangeListener((v, hasFocus) -> {
                 if (!hasFocus) {
                     try {
-                        double w = Double.parseDouble(etWeight.getText().toString());
+                        double w = Double.parseDouble(etCurrentWeight.getText().toString());
                         enteredWeights.put(exercise.getId(), w);
                     } catch (NumberFormatException e) {
                         // ignore
@@ -159,31 +161,43 @@ public class LogWorkoutAdapter extends RecyclerView.Adapter<LogWorkoutAdapter.Vi
                 }
             });
 
-            // Add set button (allows extra sets beyond target)
+            // Current sets
+            setEditTexts = new ArrayList<>();
+            setRepsEditTexts.put(exercise.getId(), setEditTexts);
+            ongoingSetsContainer.removeAllViews();
+            for (int i = 0; i < targetReps.length; i++) {
+                addCurrentSetRow(i + 1, targetReps[i], null);
+            }
+
+            // Add set button
             btnAddSet.setOnClickListener(v -> {
                 int nextSetNumber = setEditTexts.size() + 1;
-                addSetRow(nextSetNumber, 0, null); // no target for extra sets
+                addCurrentSetRow(nextSetNumber, 0, null); // no target for extra sets
             });
         }
 
-        private void addSetRow(int setNumber, int targetRep, Integer initialReps) {
-            LayoutInflater inflater = LayoutInflater.from(itemView.getContext());
-            View row = inflater.inflate(R.layout.item_set_row, setsContainer, false);
+        private void addCurrentSetRow(int setNumber, int targetRep, Integer initialReps) {
+            View row = LayoutInflater.from(itemView.getContext())
+                    .inflate(R.layout.item_set_row_three_columns, ongoingSetsContainer, false);
             TextView tvSetNumber = row.findViewById(R.id.tvSetNumber);
-            EditText etSetReps = row.findViewById(R.id.etSetReps);
+            TextView tvTarget = row.findViewById(R.id.tvTargetReps);
+            // Hide previous TextView, show current input
+            row.findViewById(R.id.tvPreviousReps).setVisibility(View.GONE);
+            TextInputLayout inputLayout = row.findViewById(R.id.inputLayoutCurrentReps);
+            inputLayout.setVisibility(View.VISIBLE);
+            EditText etCurrent = row.findViewById(R.id.etCurrentReps);
 
             tvSetNumber.setText("Set " + setNumber);
             if (targetRep > 0) {
-                etSetReps.setHint("Target: " + targetRep);
+                tvTarget.setText(String.valueOf(targetRep));
             } else {
-                etSetReps.setHint("Reps");
+                tvTarget.setText("-");
             }
             if (initialReps != null) {
-                etSetReps.setText(String.valueOf(initialReps));
+                etCurrent.setText(String.valueOf(initialReps));
             }
-
-            setsContainer.addView(row);
-            setEditTexts.add(etSetReps);
+            ongoingSetsContainer.addView(row);
+            setEditTexts.add(etCurrent);
         }
     }
 }
