@@ -46,8 +46,8 @@ public class WorkoutRepository {
         executor.execute(() -> db.setLogDao().insertAll(setLogs));
     }
 
-    // Previous record for an exercise
-    public List<SetLog> getLatestSetLogsForExercise(int exerciseId) {
-        return db.workoutLogDao().getLatestSetLogsForExercise(exerciseId);
+    // Previous record for an exercise (all sets from last workout)
+    public List<SetLog> getLatestSetsForExercise(int exerciseId) {
+        return db.workoutLogDao().getLatestSetsForExercise(exerciseId);
     }
 }

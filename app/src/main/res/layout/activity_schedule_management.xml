@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
     android:fitsSystemWindows="true">
 
     <Button

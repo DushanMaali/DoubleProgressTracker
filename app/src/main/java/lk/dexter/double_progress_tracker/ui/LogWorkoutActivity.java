@@ -11,7 +11,7 @@ import lk.dexter.double_progress_tracker.data.entity.Exercise;
 import lk.dexter.double_progress_tracker.data.entity.SetLog;
 import lk.dexter.double_progress_tracker.data.entity.WorkoutLog;
 import lk.dexter.double_progress_tracker.data.repository.WorkoutRepository;
-import lk.dexter.double_progress_tracker.ui.adapters.LogWorkoutAdapter;
+import lk.dexter.double_progress_tracker.ui.adapters.UnifiedLogAdapter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +21,7 @@ public class LogWorkoutActivity extends AppCompatActivity {
     private int scheduleId;
     private WorkoutRepository repository;
     private List<Exercise> exercises;
-    private LogWorkoutAdapter adapter;
+    private UnifiedLogAdapter adapter;
     private RecyclerView recyclerView;
 
     @Override
@@ -45,7 +45,7 @@ public class LogWorkoutActivity extends AppCompatActivity {
         new Thread(() -> {
             exercises = repository.getExercisesForScheduleSync(scheduleId);
             runOnUiThread(() -> {
-                adapter = new LogWorkoutAdapter(exercises, repository);
+                adapter = new UnifiedLogAdapter(exercises, repository);
                 recyclerView.setAdapter(adapter);
             });
         }).start();
@@ -77,7 +77,7 @@ public class LogWorkoutActivity extends AppCompatActivity {
             }
             repository.insertSetLogs(allSets);
 
-            // Double progression check with per-set targets
+            // Double progression check
             checkDoubleProgression(exercises, weights, repsMap, adapter.getTargetRepsMap());
 
             runOnUiThread(() -> {
@@ -95,8 +95,6 @@ public class LogWorkoutActivity extends AppCompatActivity {
             List<Integer> reps = repsMap.get(ex.getId());
             int[] targets = targetRepsMap.get(ex.getId());
             if (reps == null || targets == null || reps.size() < targets.length) {
-                // Not all sets completed? We require at least the target number of sets
-                // If fewer sets logged, don't suggest increase.
                 continue;
             }
             boolean allReachedTarget = true;

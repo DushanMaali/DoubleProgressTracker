@@ -9,14 +9,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- New eye‑friendly gym palette -->
-    <color name="background_dark">#1E1E1E</color>   <!-- Dark but not pure black -->
-    <color name="surface_dark">#2A2A2A</color>      <!-- Cards and surfaces -->
-    <color name="primary">#4CAF50</color>           <!-- Softer green -->
-    <color name="primary_dark">#388E3C</color>      <!-- Darker green for variants -->
-    <color name="accent">#FF8A65</color>            <!-- Warm orange -->
-    <color name="accent_dark">#F4511E</color>       <!-- Darker orange -->
-    <color name="text_primary">#FFFFFF</color>      <!-- White text -->
-    <color name="text_secondary">#B0B0B0</color>    <!-- Light gray secondary -->
-    <color name="error">#CF6679</color>             <!-- Error red (unchanged) -->
+    <!-- Softer, eye‑friendly palette -->
+    <color name="background_dark">#3A3A3A</color>      <!-- Medium‑dark gray -->
+    <color name="surface_dark">#4A4A4A</color>         <!-- Slightly lighter for cards -->
+    <color name="primary">#FFB74D</color>              <!-- Warm muted orange -->
+    <color name="primary_dark">#FF9800</color>         <!-- Deeper orange -->
+    <color name="accent">#4FC3F7</color>                <!-- Soft blue -->
+    <color name="accent_dark">#039BE5</color>           <!-- Darker blue -->
+    <color name="text_primary">#F0F0F0</color>          <!-- Off‑white text (softer) -->
+    <color name="text_secondary">#B0B0B0</color>        <!-- Light gray secondary -->
+    <color name="error">#EF9A9A</color>                 <!-- Softer error red -->
 </resources>

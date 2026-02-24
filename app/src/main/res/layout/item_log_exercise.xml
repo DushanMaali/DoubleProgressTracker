@@ -1,91 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="12dp"
-    android:background="?selectableItemBackground"
-    android:layout_marginBottom="8dp">
+    android:padding="16dp"
+    android:background="@drawable/bg_exercise_card"
+    android:layout_marginBottom="12dp">
 
+    <!-- Exercise Name -->
     <TextView
         android:id="@+id/tvExerciseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary" />
 
-    <!-- Previous Section -->
+    <!-- Previous Section Header -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Previous"
-        android:textStyle="bold"
         android:textSize="16sp"
-        android:layout_marginTop="8dp"/>
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        android:layout_marginTop="12dp" />
 
+    <!-- Previous Date & Weight -->
     <TextView
         android:id="@+id/tvPreviousDateWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="@android:color/darker_gray"/>
+        android:textColor="@color/text_secondary"
+        android:layout_marginTop="4dp" />
 
+    <!-- Table Header for Previous Sets -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:paddingVertical="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Set"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_secondary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Target"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_secondary"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Previous"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_secondary"
+            android:gravity="end" />
+    </LinearLayout>
+
+    <!-- Previous Sets Container -->
     <LinearLayout
         android:id="@+id/previousSetsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="4dp" />
 
-    <!-- Current/Ongoing Section -->
+    <!-- Ongoing Section Header -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ongoing"
-        android:textStyle="bold"
         android:textSize="16sp"
-        android:layout_marginTop="12dp"/>
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        android:layout_marginTop="16dp" />
 
+    <!-- Current Weight Input -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginTop="4dp">
+        android:layout_marginTop="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Weight:"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:textColor="@color/text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="8dp">
+            android:layout_marginStart="8dp"
+            style="@style/Widget.App.GymEditText">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etCurrentWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:textColor="@color/text_primary" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
+    <!-- Table Header for Ongoing Sets -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:paddingVertical="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Set"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_secondary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Target"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_secondary"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Reps"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_secondary"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <!-- Ongoing Sets Container -->
     <LinearLayout
         android:id="@+id/ongoingSetsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="4dp" />
 
+    <!-- Add Set Button -->
     <Button
         android:id="@+id/btnAddSet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Set"
+        android:text="ADD SET"
         android:layout_gravity="end"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="12dp"
+        style="@style/Widget.App.GymButtonSmall" />
 
 </LinearLayout>

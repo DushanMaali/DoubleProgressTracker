@@ -42,4 +42,44 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Superset Checkbox -->
+    <CheckBox
+        android:id="@+id/cbIsSuperset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Part of a superset"
+        android:layout_marginTop="8dp" />
+
+    <!-- Superset ID (visible only when checkbox checked) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilSupersetId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Superset ID (same for all exercises in the group)"
+        android:visibility="gone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSupersetId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Superset Order -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilSupersetOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Order in superset"
+        android:visibility="gone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSupersetOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>

@@ -10,7 +10,7 @@ import lk.dexter.double_progress_tracker.data.dao.*;
 import lk.dexter.double_progress_tracker.data.entity.*;
 
 @Database(entities = {Schedule.class, Exercise.class, WorkoutLog.class, SetLog.class},
-        version = 3,                   // increment to 3
+        version = 4,
         exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -27,7 +27,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "workout_db")
-                            .fallbackToDestructiveMigration()   // keeps development easy
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

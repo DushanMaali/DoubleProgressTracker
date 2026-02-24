@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme (dark) -->
+
     <style name="Theme.DoubleProgressTracker" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color -->
         <item name="colorPrimary">@color/primary</item>
@@ -13,9 +13,9 @@
         <!-- Status bar color -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
-        <!-- Background and surface -->
-        <item name="android:background">@color/background_dark</item>
-        <item name="android:windowBackground">@color/background_dark</item>
+        <!-- Background – now a gradient -->
+        <item name="android:windowBackground">@drawable/bg_gradient</item>
+        <!-- Surface color (for cards, etc.) – keep as you like -->
         <item name="colorSurface">@color/surface_dark</item>
         <item name="colorOnSurface">@color/text_primary</item>
         <!-- Text colors -->
@@ -27,7 +27,7 @@
         <item name="editTextStyle">@style/Widget.App.GymEditText</item>
     </style>
 
-    <!-- Gym-themed Button -->
+    <!-- Gym-themed Button (normal) -->
     <style name="Widget.App.GymButton" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/black</item>
         <item name="backgroundTint">@color/primary</item>
@@ -37,9 +37,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Gym-themed EditText (outlined) -->
+    <!-- Gym-themed EditText (normal, outlined) -->
     <style name="Widget.App.GymEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/primary</item>
+        <item name="boxStrokeColor">@color/accent</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
         <item name="hintTextColor">@color/text_secondary</item>
         <item name="android:textColorHint">@color/text_secondary</item>
         <item name="boxBackgroundMode">outline</item>
@@ -47,11 +49,39 @@
         <item name="colorControlActivated">@color/primary</item>
     </style>
 
-    <!-- Optional: style for dialogs -->
+    <!-- Gym-themed small EditText for set inputs -->
+    <style name="Widget.App.GymEditTextSmall" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/accent</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="hintTextColor">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="colorControlActivated">@color/primary</item>
+        <item name="boxCornerRadiusTopStart">4dp</item>
+        <item name="boxCornerRadiusTopEnd">4dp</item>
+        <item name="boxCornerRadiusBottomStart">4dp</item>
+        <item name="boxCornerRadiusBottomEnd">4dp</item>
+    </style>
+
+    <!-- Small button for ADD SET -->
+    <style name="Widget.App.GymButtonSmall" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">@color/primary</item>
+        <item name="cornerRadius">4dp</item>
+        <item name="android:paddingVertical">4dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Dialog theme overlay (optional) -->
     <style name="ThemeOverlay.App.Dialog" parent="">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/black</item>
         <item name="colorSurface">@color/surface_dark</item>
         <item name="colorOnSurface">@color/text_primary</item>
     </style>
+
 </resources>

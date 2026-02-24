@@ -3,12 +3,14 @@ package lk.dexter.double_progress_tracker.ui;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import lk.dexter.double_progress_tracker.R;
 import lk.dexter.double_progress_tracker.data.entity.Exercise;
 import lk.dexter.double_progress_tracker.data.repository.WorkoutRepository;
@@ -60,6 +62,16 @@ public class ScheduleDetailActivity extends AppCompatActivity {
         TextInputEditText etName = view.findViewById(R.id.etName);
         TextInputEditText etTargetReps = view.findViewById(R.id.etTargetReps);
         TextInputEditText etWeight = view.findViewById(R.id.etWeight);
+        CheckBox cbIsSuperset = view.findViewById(R.id.cbIsSuperset);
+        TextInputLayout tilSupersetId = view.findViewById(R.id.tilSupersetId);
+        TextInputLayout tilSupersetOrder = view.findViewById(R.id.tilSupersetOrder);
+        TextInputEditText etSupersetId = view.findViewById(R.id.etSupersetId);
+        TextInputEditText etSupersetOrder = view.findViewById(R.id.etSupersetOrder);
+
+        cbIsSuperset.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            tilSupersetId.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+            tilSupersetOrder.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+        });
 
         builder.setView(view)
                 .setTitle("Add Exercise")
@@ -77,8 +89,27 @@ public class ScheduleDetailActivity extends AppCompatActivity {
                             }
                         }
                     }
+                    Integer supersetId = null;
+                    int supersetOrder = 0;
+                    if (cbIsSuperset.isChecked()) {
+                        if (etSupersetId.getText() != null) {
+                            try {
+                                supersetId = Integer.parseInt(etSupersetId.getText().toString());
+                            } catch (NumberFormatException e) {
+                                supersetId = null;
+                            }
+                        }
+                        if (etSupersetOrder.getText() != null) {
+                            try {
+                                supersetOrder = Integer.parseInt(etSupersetOrder.getText().toString());
+                            } catch (NumberFormatException e) {
+                                supersetOrder = 1;
+                            }
+                        }
+                    }
                     int order = exercises.size();
-                    Exercise exercise = new Exercise(scheduleId, name, targetReps, weight, order);
+                    Exercise exercise = new Exercise(scheduleId, name, targetReps, weight, order,
+                            supersetId, supersetOrder);
                     repository.insertExercise(exercise);
                     loadExercises();
                 })

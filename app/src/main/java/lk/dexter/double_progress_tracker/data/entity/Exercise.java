@@ -20,15 +20,19 @@ public class Exercise {
     private double startingWeight;
     private int orderIndex;
     private double suggestedNextWeight;
+    private Integer supersetId;              // null if not part of a superset
+    private int supersetOrder;                // order within superset
 
-    // Constructor
     public Exercise(int scheduleId, String name, String targetRepsList,
-                    double startingWeight, int orderIndex) {
+                    double startingWeight, int orderIndex,
+                    Integer supersetId, int supersetOrder) {
         this.scheduleId = scheduleId;
         this.name = name;
         this.targetRepsList = targetRepsList;
         this.startingWeight = startingWeight;
         this.orderIndex = orderIndex;
+        this.supersetId = supersetId;
+        this.supersetOrder = supersetOrder;
         this.suggestedNextWeight = 0;
     }
 
@@ -62,4 +66,8 @@ public class Exercise {
     public void setOrderIndex(int orderIndex) { this.orderIndex = orderIndex; }
     public double getSuggestedNextWeight() { return suggestedNextWeight; }
     public void setSuggestedNextWeight(double suggestedNextWeight) { this.suggestedNextWeight = suggestedNextWeight; }
+    public Integer getSupersetId() { return supersetId; }
+    public void setSupersetId(Integer supersetId) { this.supersetId = supersetId; }
+    public int getSupersetOrder() { return supersetOrder; }
+    public void setSupersetOrder(int supersetOrder) { this.supersetOrder = supersetOrder; }
 }

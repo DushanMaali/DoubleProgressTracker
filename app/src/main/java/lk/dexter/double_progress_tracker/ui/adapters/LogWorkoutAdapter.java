@@ -15,9 +15,11 @@ import lk.dexter.double_progress_tracker.data.entity.Exercise;
 import lk.dexter.double_progress_tracker.data.entity.SetLog;
 import lk.dexter.double_progress_tracker.data.repository.WorkoutRepository;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class LogWorkoutAdapter extends RecyclerView.Adapter<LogWorkoutAdapter.ViewHolder> {
@@ -36,7 +38,7 @@ public class LogWorkoutAdapter extends RecyclerView.Adapter<LogWorkoutAdapter.Vi
     private void loadPreviousRecords() {
         new Thread(() -> {
             for (Exercise e : exercises) {
-                List<SetLog> last = repository.getLatestSetLogsForExercise(e.getId());
+                List<SetLog> last = repository.getLatestSetsForExercise(e.getId());
                 previousRecords.put(e.getId(), last);
             }
         }).start();
@@ -117,21 +119,20 @@ public class LogWorkoutAdapter extends RecyclerView.Adapter<LogWorkoutAdapter.Vi
             // Previous section
             List<SetLog> prevSets = previousRecords.get(exercise.getId());
             if (prevSets != null && !prevSets.isEmpty()) {
+                // For date, we could fetch the workout log date, but we'll just show weight for now
                 double prevWeight = prevSets.get(0).getWeight();
                 tvPreviousDateWeight.setText("Last: " + prevWeight + " kg");
                 previousSetsContainer.removeAllViews();
                 for (int i = 0; i < prevSets.size(); i++) {
                     SetLog set = prevSets.get(i);
                     View row = LayoutInflater.from(itemView.getContext())
-                            .inflate(R.layout.item_set_row_three_columns, previousSetsContainer, false);
+                            .inflate(R.layout.item_set_row_previous, previousSetsContainer, false);
                     TextView tvSetNumber = row.findViewById(R.id.tvSetNumber);
                     TextView tvTarget = row.findViewById(R.id.tvTargetReps);
                     TextView tvPrevReps = row.findViewById(R.id.tvPreviousReps);
-                    // Hide current input
-                    row.findViewById(R.id.inputLayoutCurrentReps).setVisibility(View.GONE);
-                    tvPrevReps.setVisibility(View.VISIBLE);
 
                     tvSetNumber.setText("Set " + (i + 1));
+                    // Show target if available for this set index
                     if (i < targetReps.length) {
                         tvTarget.setText(String.valueOf(targetReps[i]));
                     } else {
@@ -145,7 +146,7 @@ public class LogWorkoutAdapter extends RecyclerView.Adapter<LogWorkoutAdapter.Vi
                 previousSetsContainer.removeAllViews();
             }
 
-            // Current section
+            // Current weight
             double suggestedWeight = exercise.getSuggestedNextWeight() > 0 ?
                     exercise.getSuggestedNextWeight() : exercise.getStartingWeight();
             etCurrentWeight.setText(String.valueOf(suggestedWeight));
@@ -178,20 +179,16 @@ public class LogWorkoutAdapter extends RecyclerView.Adapter<LogWorkoutAdapter.Vi
 
         private void addCurrentSetRow(int setNumber, int targetRep, Integer initialReps) {
             View row = LayoutInflater.from(itemView.getContext())
-                    .inflate(R.layout.item_set_row_three_columns, ongoingSetsContainer, false);
+                    .inflate(R.layout.item_set_row_ongoing, ongoingSetsContainer, false);
             TextView tvSetNumber = row.findViewById(R.id.tvSetNumber);
-            TextView tvTarget = row.findViewById(R.id.tvTargetReps);
-            // Hide previous TextView, show current input
-            row.findViewById(R.id.tvPreviousReps).setVisibility(View.GONE);
-            TextInputLayout inputLayout = row.findViewById(R.id.inputLayoutCurrentReps);
-            inputLayout.setVisibility(View.VISIBLE);
+            TextView tvTargetHint = row.findViewById(R.id.tvTargetHint);
             EditText etCurrent = row.findViewById(R.id.etCurrentReps);
 
-            tvSetNumber.setText("Set " + setNumber);
+            tvSetNumber.setText("Set " + setNumber + ":");
             if (targetRep > 0) {
-                tvTarget.setText(String.valueOf(targetRep));
+                tvTargetHint.setText("(" + targetRep + ")");
             } else {
-                tvTarget.setText("-");
+                tvTargetHint.setText("");
             }
             if (initialReps != null) {
                 etCurrent.setText(String.valueOf(initialReps));

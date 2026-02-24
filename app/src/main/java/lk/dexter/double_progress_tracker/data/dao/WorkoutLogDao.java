@@ -15,10 +15,11 @@ public interface WorkoutLogDao {
     @Query("SELECT * FROM workout_logs WHERE scheduleId = :scheduleId ORDER BY date DESC")
     List<WorkoutLog> getWorkoutLogsForSchedule(int scheduleId);
 
-    // Get the latest set logs for an exercise (previous record)
+    // Get all sets from the most recent workout for a given exercise
     @Query("SELECT sl.* FROM set_logs sl " +
-            "INNER JOIN workout_logs wl ON sl.workoutLogId = wl.id " +
-            "WHERE sl.exerciseId = :exerciseId " +
-            "ORDER BY wl.date DESC LIMIT 3")
-    List<SetLog> getLatestSetLogsForExercise(int exerciseId);
+            "WHERE sl.workoutLogId = (SELECT wl.id FROM workout_logs wl " +
+            "                        INNER JOIN set_logs sl2 ON wl.id = sl2.workoutLogId " +
+            "                        WHERE sl2.exerciseId = :exerciseId " +
+            "                        ORDER BY wl.date DESC LIMIT 1)")
+    List<SetLog> getLatestSetsForExercise(int exerciseId);
 }
