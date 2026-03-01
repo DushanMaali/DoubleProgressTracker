@@ -22,6 +22,20 @@
         android:text="Add Exercise"
         android:layout_marginTop="8dp"/>
 
+    <Button
+        android:id="@+id/btnViewHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Workout History"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/btnViewSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Workout Summary"
+        android:layout_marginTop="8dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

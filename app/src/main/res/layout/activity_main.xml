@@ -16,10 +16,18 @@
         android:padding="16dp"/>
 
     <Button
-        android:id="@+id/btnLogWorkout"
+        android:id="@+id/btnLogWorkoutNormal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log Workout"
+        android:text="Log Workout (Normal)"
+        android:layout_marginBottom="16dp"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/btnLogWorkoutAdvanced"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log Workout (Advanced)"
         android:padding="16dp"/>
 
 </LinearLayout>

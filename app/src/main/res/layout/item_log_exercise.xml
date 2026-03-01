@@ -179,4 +179,14 @@
         android:layout_marginTop="12dp"
         style="@style/Widget.App.GymButtonSmall" />
 
+    <!-- Finish Exercise Button -->
+    <Button
+        android:id="@+id/btnFinishExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FINISH EXERCISE"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        style="@style/Widget.App.GymButtonSmall" />
+
 </LinearLayout>

@@ -16,14 +16,16 @@ public class LogWorkoutSelectionActivity extends AppCompatActivity {
     private WorkoutRepository repository;
     private List<Schedule> schedules;
     private RecyclerView recyclerView;
+    private String mode; // "normal" or "advanced"
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_workout_selection);
 
+        mode = getIntent().getStringExtra("mode");
         TextView tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Select Schedule to Log");
+        tvTitle.setText("Select Schedule to Log (" + mode + ")");
 
         repository = new WorkoutRepository(this);
         recyclerView = findViewById(R.id.recyclerView);
@@ -40,6 +42,7 @@ public class LogWorkoutSelectionActivity extends AppCompatActivity {
                     Intent intent = new Intent(LogWorkoutSelectionActivity.this, LogWorkoutActivity.class);
                     intent.putExtra("schedule_id", schedule.getId());
                     intent.putExtra("schedule_name", schedule.getName());
+                    intent.putExtra("mode", mode);
                     startActivity(intent);
                 });
                 recyclerView.setAdapter(adapter);

@@ -21,4 +21,10 @@ public interface ExerciseDao {
 
     @Query("SELECT * FROM exercises WHERE scheduleId = :scheduleId ORDER BY orderIndex")
     List<Exercise> getExercisesForSchedule(int scheduleId);
+
+    @Query("SELECT * FROM exercises WHERE id = :exerciseId")
+    Exercise getExerciseById(int exerciseId);
+
+    
+
 }

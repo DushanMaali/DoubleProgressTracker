@@ -3,6 +3,8 @@ package lk.dexter.double_progress_tracker.ui.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,13 +14,14 @@ import java.util.List;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHolder> {
     private List<Exercise> exercises;
-    private OnItemClickListener listener;
+    private OnExerciseActionListener listener;
 
-    public interface OnItemClickListener {
-        void onItemClick(Exercise exercise);
+    public interface OnExerciseActionListener {
+        void onEdit(Exercise exercise);
+        void onDelete(Exercise exercise);
     }
 
-    public ExerciseAdapter(List<Exercise> exercises, OnItemClickListener listener) {
+    public ExerciseAdapter(List<Exercise> exercises, OnExerciseActionListener listener) {
         this.exercises = exercises;
         this.listener = listener;
     }
@@ -47,7 +50,22 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         } else {
             holder.tvSuggestion.setVisibility(View.GONE);
         }
-        holder.itemView.setOnClickListener(v -> listener.onItemClick(e));
+
+        holder.ivMenu.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(v.getContext(), v);
+            popup.inflate(R.menu.exercise_item_menu);
+            popup.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.action_edit) {
+                    listener.onEdit(e);
+                    return true;
+                } else if (item.getItemId() == R.id.action_delete) {
+                    listener.onDelete(e);
+                    return true;
+                }
+                return false;
+            });
+            popup.show();
+        });
     }
 
     @Override
@@ -55,11 +73,13 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvTarget, tvSuggestion;
+        ImageView ivMenu;
         ViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvTarget = itemView.findViewById(R.id.tvTarget);
             tvSuggestion = itemView.findViewById(R.id.tvSuggestion);
+            ivMenu = itemView.findViewById(R.id.ivMenu);
         }
     }
 }

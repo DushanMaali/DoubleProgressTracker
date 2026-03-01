@@ -33,6 +33,12 @@
             android:name=".ui.LogWorkoutActivity"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity android:name=".ui.WorkoutHistoryActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity android:name=".ui.WorkoutSummaryActivity"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

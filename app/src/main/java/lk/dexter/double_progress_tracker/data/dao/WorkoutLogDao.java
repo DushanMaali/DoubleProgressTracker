@@ -1,6 +1,7 @@
 package lk.dexter.double_progress_tracker.data.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import lk.dexter.double_progress_tracker.data.entity.SetLog;
@@ -22,4 +23,7 @@ public interface WorkoutLogDao {
             "                        WHERE sl2.exerciseId = :exerciseId " +
             "                        ORDER BY wl.date DESC LIMIT 1)")
     List<SetLog> getLatestSetsForExercise(int exerciseId);
+
+    @Delete
+    void delete(WorkoutLog workoutLog);
 }
